@@ -1,18 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Auth from '../../layout/Auth';
 import swal from '@sweetalert/with-react';
 import { Controller, useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import CustomButton from '../../src/components/custom-button/CustomButton';
-import { Box, CircularProgress, makeStyles, useTheme } from '@material-ui/core';
+import { Box, CircularProgress, LinearProgress, makeStyles } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useApolloClient, gql } from '@apollo/client';
 import debounce from 'debounce-promise';
 import { expRgEmail } from '../../utils/validation-inputs';
+import { useRouter } from 'next/router';
 
-const useStyles = makeStyles({
+const REGISTRO = gql`
+  mutation createCliente ($input: ClienteInput!) {
 
-});
+    createCliente(input: $input){
+      id
+      email
+    }
+  
+  }
+`;
 
 const GET_EMAILS = gql`
   query verificar($consulta: String!) {
@@ -23,17 +31,41 @@ const GET_EMAILS = gql`
 `;
 
 const Registro = () => {
-  const theme = useTheme();
   const matches = useMediaQuery('(min-width:767px)');
-  const classes = useStyles();
   const client = useApolloClient();
+  const router = useRouter();
+  const [loadingRegis, setLoadingRegis] = useState(false);
 
   const { handleSubmit, control, getValues, formState } = useForm({
     mode: 'onChange'
   });
 
-  const onSubmit = data => {
-    console.log(data);
+  const onSubmit = async dataForm => {
+
+    try {
+
+      setLoadingRegis(true);
+
+      delete dataForm['reteat-password'];
+
+      const { data } = await client.mutate({
+        mutation: REGISTRO,
+        variables: {
+          "input": dataForm
+        }
+      });
+
+      swal("Gracias por registrarte!", `Cliente registrado correctamente`, "success");
+
+      setLoadingRegis(false);
+
+      router.push('/auth/login');
+
+    } catch (error) {
+      console.error(error);
+      swal("Problemas al guardar datos!", `Comunicate con un administrador del sistema`, "error");
+    }
+
   };
 
   useEffect(() => {
@@ -42,12 +74,18 @@ const Registro = () => {
 
   return (
     <>
-
       <div style={{
         width: matches ? '522px' : '100%'
       }}>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {loadingRegis && (
+            <Box sx={{ width: '100%' }}>
+              <LinearProgress />
+            </Box>
+          )
+        }
+
+        <form role="form" onSubmit={handleSubmit(onSubmit)}>
 
           <Box
             sx={{
@@ -75,14 +113,10 @@ const Registro = () => {
                         debounce(
                           async documento => {
 
-                            //setVerifyEmail(true);
-
                             const { data } = await client.query({
                               query: GET_EMAILS,
                               variables: { "consulta": `documento = '${documento}'` }
                             });
-
-                            //setVerifyEmail(false);
 
                             if (data['verificar']) {
                               resolve('Documento ya utilizado');
@@ -162,14 +196,10 @@ const Registro = () => {
                         debounce(
                           async email => {
 
-                            //setVerifyEmail(true);
-
                             const { data } = await client.query({
                               query: GET_EMAILS,
                               variables: { "consulta": `email = '${email}'` }
                             });
-
-                            //setVerifyEmail(false);
 
                             if (data['verificar']) {
                               resolve('Email no disponible');
