@@ -1,0 +1,34 @@
+{
+  "name": "e-payco",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next --port 4200",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.3.16",
+    "@emotion/cache": "latest",
+    "@emotion/react": "latest",
+    "@emotion/server": "latest",
+    "@emotion/styled": "latest",
+    "@material-ui/core": "next",
+    "@sweetalert/with-react": "^0.1.1",
+    "clsx": "latest",
+    "debounce-promise": "^3.1.2",
+    "dotenv": "^9.0.2",
+    "graphql": "^15.5.0",
+    "moment": "^2.29.1",
+    "next": "latest",
+    "prop-types": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "^7.5.2",
+    "react-moment": "^1.1.1",
+    "sweetalert": "^2.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.0"
+  }
+}
