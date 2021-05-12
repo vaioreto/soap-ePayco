@@ -83,7 +83,7 @@ const ModalConfirmarPago = ({ descripcion, openModal, modalClose }) => {
                 swal("Problemas al confirmar pago!", `Token usado o incorrecto por favor verifique su correo electronico`, "warning");
             } else {
                 swal("Pago Confirmado!", `Su pago a sido confirmado correctamente`, "success");
-                router.push('/auth/login');
+                router.push('/admin/consultar-saldo');
             }
 
             setLoadingPago(false);            
