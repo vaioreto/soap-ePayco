@@ -1,4 +1,4 @@
-Framework utilizado para este desarrollo es nextJs
+Framework utilizado para este desarrollo es nextJs para mayor informacion visitar la pagina oficial de este famework de react ====>>> https://nextjs.org/
 
 > 1- instalar librerias usando npm i o yarn
 
