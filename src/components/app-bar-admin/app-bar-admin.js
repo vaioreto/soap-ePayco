@@ -90,7 +90,7 @@ const AppBarAdmin = (props) => {
 
         const auth = JSON.parse(localStorage.getItem('auth'));
 
-        const { email, nombre } = decrypt(auth)
+        const { nombre } = decrypt(auth)
 
         setEmail(nombre);
 
