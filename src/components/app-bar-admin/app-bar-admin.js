@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { AppBar, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles, Toolbar, Typography, useTheme } from "@material-ui/core";
+import { AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles, Toolbar, Typography, useTheme } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -9,6 +9,7 @@ import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import Link from 'next/link';
+import { decrypt } from '../../../utils/global';
 
 const drawerWidth = 240;
 
@@ -65,6 +66,13 @@ const AppBarAdmin = (props) => {
 
     const router = useRouter();
 
+    const [email, setEmail] = useState('');
+
+    const cerrarSession = () => {
+        localStorage.removeItem('auth');
+        router.push('/auth/login');
+    }
+
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = useState(false);
@@ -76,6 +84,22 @@ const AppBarAdmin = (props) => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+
+    useEffect(() => {
+
+        const auth = JSON.parse(localStorage.getItem('auth'));
+
+        const { email, nombre } = decrypt(auth)
+
+        setEmail(nombre);
+
+        console.log(email);
+
+        return () => {
+
+        }
+    }, [])
 
     return (
         <>
@@ -97,9 +121,10 @@ const AppBarAdmin = (props) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Mini variant drawer
-          </Typography>
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+                        {email}
+                    </Typography>
+                    <Button onClick={cerrarSession} color="inherit">Cerrar Session</Button>
                 </Toolbar>
             </AppBar>
 
