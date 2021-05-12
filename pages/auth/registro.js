@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Auth from '../../layout/Auth';
 import swal from '@sweetalert/with-react';
 import { Controller, useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import CustomButton from '../../src/components/custom-button/CustomButton';
-import { Box, CircularProgress, LinearProgress, makeStyles } from '@material-ui/core';
+import { Backdrop, Box, CircularProgress, LinearProgress } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useApolloClient, gql } from '@apollo/client';
 import debounce from 'debounce-promise';
 import { expRgEmail } from '../../utils/validation-inputs';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const REGISTRO = gql`
   mutation createCliente ($input: ClienteInput!) {
@@ -64,13 +65,10 @@ const Registro = () => {
     } catch (error) {
       console.error(error);
       swal("Problemas al guardar datos!", `Comunicate con un administrador del sistema`, "error");
+      setLoadingRegis(false);
     }
 
   };
-
-  useEffect(() => {
-
-  }, [])
 
   return (
     <>
@@ -78,12 +76,12 @@ const Registro = () => {
         width: matches ? '522px' : '100%'
       }}>
 
-        {loadingRegis && (
-            <Box sx={{ width: '100%' }}>
-              <LinearProgress />
-            </Box>
-          )
-        }
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={loadingRegis}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
 
         <form role="form" onSubmit={handleSubmit(onSubmit)}>
 
@@ -345,6 +343,12 @@ const Registro = () => {
               }
 
             </CustomButton>
+
+            <Link href={'/auth/login'} passHref>
+              <CustomButton component="a" color="red">
+                Login
+              </CustomButton>
+            </Link>
 
           </Box>
 

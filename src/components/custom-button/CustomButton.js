@@ -22,11 +22,11 @@ const useStyles = makeStyles({
     },
 });
 
-const CustomButton = (props) => {
+const CustomButton = React.forwardRef((props, ref) => {
     const { color, ...other } = props;
     const classes = useStyles(props);
     return <Button className={classes.root} {...other} />;
-}
+})
 
 CustomButton.propTypes = {
     color: PropTypes.oneOf(['blue', 'red']).isRequired,

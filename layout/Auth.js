@@ -7,11 +7,11 @@ const Auth = (props) => {
 
   React.useEffect(() => {
 
-    /* const auth = JSON.parse(sessionStorage.getItem('auth'));
+    const auth = JSON.parse(localStorage.getItem('auth'));
     
     if( auth != null ) {
-      router.push('/admin/dashboard');
-    } */
+      router.push('/admin/consultar-saldo');
+    }
 
   }, []);
 
