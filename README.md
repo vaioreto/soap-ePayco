@@ -1,4 +1,4 @@
-Framework usando para este desarrollo es nextJs
+Framework utilizado para este desarrollo es nextJs
 
 1- instalar librerias usando npm i o yarn
 2- entorno de desarrollo "npm run dev"
