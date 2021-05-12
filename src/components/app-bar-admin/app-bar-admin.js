@@ -94,8 +94,6 @@ const AppBarAdmin = (props) => {
 
         setEmail(nombre);
 
-        console.log(email);
-
         return () => {
 
         }
