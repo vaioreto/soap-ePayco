@@ -64,7 +64,7 @@ const Login = () => {
 
     } catch (error) {
       console.error(error);
-      setLoadingRegis(true);
+      setLoadingRegis(false);
       swal("Problemas al verificar credenciales!", `Comunicate con un administrador del sistema`, "error");
     }
 
