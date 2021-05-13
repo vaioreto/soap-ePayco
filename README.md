@@ -1,4 +1,4 @@
-Framework utilizado para este desarrollo es nextJs para mayor informacion visitar la pagina oficial de este framework de react ====>>> https://nextjs.org/ y @apollo/client para conectar con el api-rest, para mayor informacion visitar ===>>> https://www.apollographql.com/docs/react/
+Framework utilizado para este desarrollo es nextJs para mayor informacion visitar la pagina oficial de este framework de react ====>>> https://nextjs.org/, @apollo/client para conectar con el api-rest, para mayor informacion visitar ===>>> https://www.apollographql.com/docs/react/ y reac-material
 
 > 1- instalar librerias usando npm i o yarn
 
