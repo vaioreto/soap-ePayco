@@ -20,6 +20,7 @@ const ConfirmarPagos = (props) => {
 
     const [openModal, setOpenModal] = useState(false);
     const [descripcionModal, setDescripcionModal] = useState('');
+    const [idCompra, setIdCompra] = useState(0);
     const handleClose = (e) => setOpenModal(e);
 
     const handleOpen = () => setOpenModal(true);
@@ -27,12 +28,13 @@ const ConfirmarPagos = (props) => {
     const handleListItemClick = (item) => {
         handleOpen();
         setDescripcionModal(`Confirmar pago de ${item['descripcion']} por un Total de ${item['monto']}$`);
+        setIdCompra(item['id']);
     };
 
     return (
         <>
 
-            <ModalConfirmarPago descripcion={descripcionModal} openModal={openModal} modalClose={(e) => handleClose(e)} />
+            <ModalConfirmarPago descripcion={descripcionModal} idCompra={idCompra} openModal={openModal} modalClose={(e) => handleClose(e)} />
 
             <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                 <List component="nav" aria-label="main mailbox folders">

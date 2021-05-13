@@ -8,9 +8,9 @@ import { gql, useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 const CONFIRMAR_PAGO = gql`
-    mutation confirmarPago($sessionToken: ClienteWebTokenInput!, $tokenPago: String!){
+    mutation confirmarPago($sessionToken: ClienteWebTokenInput!, $tokenPago: String!, $id: Int!){
   
-        confirmarPagos(sessionToken: $sessionToken, tokenPago: $tokenPago){
+        confirmarPagos(sessionToken: $sessionToken, tokenPago: $tokenPago, id: $id){
             id
             pagos{
                 id
@@ -41,7 +41,7 @@ const style = {
     p: 4,
 };
 
-const ModalConfirmarPago = ({ descripcion, openModal, modalClose }) => {
+const ModalConfirmarPago = ({ descripcion, idCompra, openModal, modalClose }) => {
 
     const client = useApolloClient();
     const [open, setOpen] = useState(false);
@@ -75,7 +75,8 @@ const ModalConfirmarPago = ({ descripcion, openModal, modalClose }) => {
                 mutation: CONFIRMAR_PAGO,
                 variables: {
                     "sessionToken": auth,
-                    "tokenPago": dataForm['token']
+                    "tokenPago": dataForm['token'],
+                    "id": idCompra
                 }
             });
 
